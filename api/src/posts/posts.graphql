@@ -1,0 +1,21 @@
+scalar Date
+
+type Post {
+    id: ID!
+    title: String!
+    description: String!
+    user: User
+    createdAt: Date!
+    comments: [Comment]
+}
+
+type Comment {
+    text: String!
+    createdAt: Date!
+    user: User
+}
+
+type Query {
+    posts: [Post]
+    post(id: ID!): Post
+}

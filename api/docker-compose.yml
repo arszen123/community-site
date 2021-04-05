@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+    api:
+        image: node
+        working_dir: /app
+        volumes:
+            - ./:/app
+        expose:
+            - 8080
+        ports:
+            - 8080:8080
+        environment:
+            DB_URI: mongodb://database:27017
+            DB_AUTH_USER: root
+            DB_AUTH_PASS: example
+        depends_on: 
+            - database
+        command: "npm run start:dev"
+
+    database:
+        image: mongo
+        restart: always
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: example
+    
+    database-ui:
+        image: mongo-express
+        restart: always
+        depends_on:
+            - database
+        ports:
+            - 8081:8081
+        environment:
+            ME_CONFIG_MONGODB_SERVER: database
+            #ME_CONFIG_MONGODB_AUTH_DATABASE: admin
+            ME_CONFIG_MONGODB_ADMINUSERNAME: root
+            ME_CONFIG_MONGODB_ADMINPASSWORD: example
