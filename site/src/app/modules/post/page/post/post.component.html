@@ -4,7 +4,7 @@
         <p class="text">{{ post.description }}</p>
         <p class="info">{{ post.user.username }} {{ post.createdAt | date }}</p>
     </div>
-    <app-comment *ngFor="let comment of post.comments" class="comment" [comment]="comment">
+    <app-comment *ngFor="let comment of post.comments" class="comment" [comment]="comment" (vote)="vote($event)">
     </app-comment>
     <div *ngIf="isAuthenticated">
         <app-create-comment (save)="addComment($event)"></app-create-comment>

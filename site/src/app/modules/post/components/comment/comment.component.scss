@@ -9,5 +9,11 @@
         font-size: smaller;
         border-radius: 0 0 10px 10px;
         padding: 10px;
+        display: flex;
     }
+}
+mat-icon {
+    font-size: large;
+    vertical-align: -webkit-baseline-middle;
+    text-align: right;
 }

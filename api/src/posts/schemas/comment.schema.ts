@@ -1,10 +1,16 @@
 import { User } from '@app/users';
-import { ModelDefinition, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import {
+  ModelDefinition,
+  Prop,
+  raw,
+  Schema,
+  SchemaFactory,
+} from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 
 export type CommentDocument = Comment & Document;
 
-@Schema({ _id: false })
+@Schema()
 export class Comment {
   @Prop({ type: String, required: true })
   text: string;
@@ -12,6 +18,18 @@ export class Comment {
   user: User;
   @Prop({ type: Date, required: true, default: new Date() })
   createdAt: Date;
+  @Prop(
+    raw([
+      {
+        user: { type: MongooseSchema.Types.ObjectId, ref: 'User' },
+        isUpvote: { type: Boolean },
+      },
+    ]),
+  )
+  votes: User[];
+  get id() {
+    return (this as any)._id;
+  }
 }
 
 export const CommentSchema = SchemaFactory.createForClass(Comment);

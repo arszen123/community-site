@@ -25,4 +25,9 @@ export class PostsResolver {
   async getUser(@Parent() post: Post) {
     return post.user;
   }
+
+  @ResolveField('numberOfComments')
+  getNumberOfComments(@Parent() post: Post) {
+    return (post.comments || []).length;
+  }
 }

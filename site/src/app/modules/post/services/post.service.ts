@@ -9,11 +9,15 @@ type User = {
   username: string,
 };
 export type Comment = {
+  id: string,
   text: string,
   user: User,
   createdAt: Date,
+  numberOfUpvotes: Number,
+  numberOfDownvotes: Number,
 }
-export type ListPost = { id: string, title: string}
+type BasePost = { id: string, title: string};
+export type ListPost = BasePost & {numberOfComments: Number, createdAt: Date};
 export type Post = ListPost & {
   description: string,
   comments: Comment[],
@@ -36,6 +40,8 @@ export class PostService {
         posts {
           id
           title
+          numberOfComments
+          createdAt
         }
       }`
     }).pipe(map(res => (res.data as any).posts));
@@ -53,8 +59,11 @@ export class PostService {
             username
           }
           comments {
+            id
             text
             createdAt
+            numberOfUpvotes
+            numberOfDownvotes
             user {
               username
             }
@@ -73,5 +82,10 @@ export class PostService {
 
   addComment(postId: string, text: string) {
     return this.http.post(environment.api + `/posts/${postId}/comments`, {text});
+  }
+
+  voteComment(postId: string, commentId: string, isUpvote: boolean) {
+    const vote = isUpvote ? 'true' : 'false';
+    return this.http.post(environment.api + `/posts/${postId}/comments/${commentId}/vote/${vote}`, {});
   }
 }

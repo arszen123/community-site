@@ -1,5 +1,20 @@
 <div class="comment">
     <p class="text">{{ comment.text }}</p>
             
-    <p class="info">{{ comment.user.username }} {{ comment.createdAt | date }}</p>
+    <div class="info">
+        <div>
+            <div>{{ comment.user.username }}</div>
+            <p></p>
+            <div>{{ comment.createdAt | date }}</div>
+        </div>
+        <span class="spacer"></span>
+        <button mat-button (click)="triggerVote(true)">
+            <mat-icon>expand_more</mat-icon>
+            {{ comment.numberOfUpvotes }}
+        </button>
+        <button mat-button (click)="triggerVote(false)">
+            <mat-icon>expand_less</mat-icon>
+            {{ comment.numberOfDownvotes }}
+        </button>
+    </div>
 </div>

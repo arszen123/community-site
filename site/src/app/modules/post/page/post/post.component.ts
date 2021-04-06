@@ -43,6 +43,14 @@ export class PostComponent implements OnInit {
     })
   }
 
+  vote({commentId, isUpvote}) {
+    this.post$.subscribe(({id}) => {
+      this.postService.voteComment(id, commentId, isUpvote).subscribe(() => {
+        this._message('Comment voted!');
+      })
+    })
+  }
+
   private _message(message: string) {
     this._snackBar.open(message, 'Ok', {
       duration: 2500,

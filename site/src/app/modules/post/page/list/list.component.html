@@ -1,5 +1,12 @@
-<div class="container">
-    <p class="post-item" *ngFor="let post of posts$ | async" [routerLink]="['/posts/' + post.id]">
-        {{ post.title }}
-    </p>
+<div class="post-item" *ngFor="let post of posts$ | async" [routerLink]="['/posts/' + post.id]">
+    <span>{{ post.title }}</span>
+    <span class="spacer"></span>
+    <span>
+        <mat-icon>comment</mat-icon>
+        {{ post.numberOfComments }}
+    </span>
+    <span>
+        <mat-icon>access_time</mat-icon>
+        {{ post.createdAt | date }}
+    </span>
 </div>

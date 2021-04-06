@@ -18,8 +18,7 @@ A simple website, where you can create posts, comment under posts, upvote/downvo
 
 ## TODO
 
-- ➕ Upvote/Downvote feature
-- 🪛 After the comment saved add it to the list of comments.
+- 🪛 After the comment saved add it to the list of comments. After Upvote/Downvote refresh comment.
 - ➕ Profile page, with the list of my posts
 - ➕ Full graphql support for post module
 - ➕ Infinite scroll and graphql pager.
