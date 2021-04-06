@@ -1,0 +1,12 @@
+<div *ngIf="post$ | async as post" class="container">
+    <div class="post">
+        <h1 class="title">{{ post.title }}</h1>
+        <p class="text">{{ post.description }}</p>
+        <p class="info">{{ post.user.username }} {{ post.createdAt | date }}</p>
+    </div>
+    <app-comment *ngFor="let comment of post.comments" class="comment" [comment]="comment">
+    </app-comment>
+    <div *ngIf="isAuthenticated">
+        <app-create-comment (save)="addComment($event)"></app-create-comment>
+    </div>
+</div>

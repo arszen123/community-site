@@ -1,0 +1,9 @@
+<div class="container">
+    <mat-form-field class="text">
+        <mat-label>Write your comment here...</mat-label>
+        <textarea matInput #comment></textarea>
+    </mat-form-field>
+    <div class="button">
+        <button mat-flat-button color="primary" (click)="save.emit(comment.value)">Save</button>
+    </div>
+</div>
