@@ -1,8 +1,10 @@
 type User {
     id: ID!
     username: String
+    posts: [Post]!
 }
 
 type Query {
     me: User
+    user(id: ID!): User
 }

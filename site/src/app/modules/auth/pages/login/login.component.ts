@@ -23,7 +23,7 @@ export class LoginComponent {
 
   authenticate() {
     if (this.form.valid) {
-      this.authService.authenticate(this.form.value)
+      const sub = this.authService.authenticate(this.form.value)
       .pipe(catchError(err => {
         if (err.status === 401) {
           this._message('Wrong username or password!');
@@ -31,6 +31,7 @@ export class LoginComponent {
         return err;
       }))
       .subscribe(() => {
+        sub.unsubscribe();
         this._message('Login success! Redirecting...')
         this.router.navigate(['/']);
       });

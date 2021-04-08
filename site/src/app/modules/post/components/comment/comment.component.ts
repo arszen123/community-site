@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Comment } from '../../services/post.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Comment } from '../../interfaces/comment';
 
 @Component({
   selector: 'app-comment',

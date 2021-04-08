@@ -17,8 +17,8 @@ export class AuthController {
   @Post('sign-up')
   async signUp(@Body() body: SignUpDto) {
     try {
-      const res = await this.authService.signUp(body);
-      return res;
+      const user = await this.authService.signUp(body);
+      return this.authService.login(user);
     } catch (e) {
       if (e.code === 11000) {
         throw new ConflictException('Username already exists');

@@ -1,0 +1,12 @@
+<div class="post-item" [routerLink]="['/posts/' + post.id]">
+    <span>{{ post.title }}</span>
+    <span class="spacer"></span>
+    <span>
+        <mat-icon>comment</mat-icon>
+        {{ post.numberOfComments }}
+    </span>
+    <span>
+        <mat-icon>access_time</mat-icon>
+        {{ post.createdAt | date }}
+    </span>
+</div>

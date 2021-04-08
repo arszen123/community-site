@@ -31,3 +31,14 @@ export class PostsResolver {
     return (post.comments || []).length;
   }
 }
+
+@Resolver('User')
+export class UserPostsResolver {
+  constructor(private postsService: PostsService) {}
+
+  @ResolveField('posts')
+  async getUserPosts(@Parent() user: { id: string }) {
+    const res = await this.postsService.findPostsByUserId(user.id);
+    return res || [];
+  }
+}

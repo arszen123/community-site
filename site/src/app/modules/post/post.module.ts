@@ -9,6 +9,7 @@ import { MaterialModule } from '../shared/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateCommentComponent } from './components/create-comment/create-comment.component';
 import { CommentComponent } from './components/comment/comment.component';
+import { ListItemComponent } from './components/list-item/list-item.component';
 
 
 
@@ -19,6 +20,10 @@ import { CommentComponent } from './components/comment/comment.component';
     CreatePostComponent,
     CreateCommentComponent,
     CommentComponent,
+    ListItemComponent,
+  ],
+  exports: [
+    ListItemComponent
   ],
   imports: [
     CommonModule,

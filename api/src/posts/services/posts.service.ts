@@ -34,6 +34,10 @@ export class PostsService {
     return this.postModel.find({}).populate(['user']).exec();
   }
 
+  async findPostsByUserId(userId: any) {
+    return this.postModel.find({ user: userId }).exec();
+  }
+
   async voteComment(
     postId: string,
     commentId: string,

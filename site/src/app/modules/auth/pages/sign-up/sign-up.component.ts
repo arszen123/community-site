@@ -23,13 +23,14 @@ export class SignUpComponent{
 
   signUp() {
     if (this.form.valid) {
-      this.authService.signUp(this.form.value)
+      const sub = this.authService.signUp(this.form.value)
       .pipe(catchError(err => {
         if (err.status === 409) {
           this._message('Username already taken. If it\'s yours, login.');
         }
         return err;
       })).subscribe(() => {
+        sub.unsubscribe();
         this._message('Success! Redirecting...');
         this.router.navigate(['/']);
       });

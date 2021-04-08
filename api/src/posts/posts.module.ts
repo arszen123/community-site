@@ -5,16 +5,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { PostDefinition } from './schemas/post.schema';
 import { CommentDefinition } from './schemas/comment.schema';
 import { UsersModule } from '@app/users/users.module';
-import { PostsResolver } from './resolvers/posts.resolver';
+import { PostsResolver, UserPostsResolver } from './resolvers/posts.resolver';
 import { CommentsResolver } from './resolvers/comments.resolver';
 
 @Module({
-  imports: [
-    UsersModule,
-    MongooseModule.forFeature([PostDefinition, CommentDefinition]),
-  ],
+  imports: [MongooseModule.forFeature([PostDefinition, CommentDefinition])],
   controllers: [PostsController],
-  providers: [PostsService, PostsResolver, CommentsResolver],
+  providers: [PostsService, PostsResolver, CommentsResolver, UserPostsResolver],
   exports: [],
 })
 export class PostsModule {}

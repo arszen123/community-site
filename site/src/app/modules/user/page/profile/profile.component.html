@@ -1,0 +1,12 @@
+<div>
+    <div *ngIf="user$ | async as user">
+        <h1 *ngIf="isMe">My posts</h1>
+        <h1 *ngIf="!isMe">"{{ user.username }}" user posts</h1>
+        <div class="posts">
+            <app-list-item *ngFor="let post of user.posts" [post]="post"></app-list-item>
+        </div>
+    </div>
+    <div *ngIf="!(user$ | async)">
+        <h1 style="text-align: center">User not exists</h1>
+    </div>
+</div>

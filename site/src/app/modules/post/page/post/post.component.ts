@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Post, PostService } from '../../services/post.service';
+import { PostService } from '../../services/post.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { Post } from '../../interfaces/post';
 
 @Component({
   selector: 'app-post',
@@ -13,6 +14,7 @@ import { AuthService } from 'src/app/modules/auth/services/auth.service';
 export class PostComponent implements OnInit {
 
   post$: Observable<Post>;
+  private postId: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -28,6 +30,7 @@ export class PostComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(({postId}) => {
       this.post$ = this.postService.findById(postId);
+      this.postId = postId;
     });
   }
 
@@ -36,18 +39,14 @@ export class PostComponent implements OnInit {
       this._message('Comment should be at least 20 character long!');
       return;
     }
-    this.post$.subscribe(({id}) => {
-      this.postService.addComment(id, text).subscribe(() => {
-        this._message('Comment added');
-      })
+    this.postService.addComment(this.postId, text).subscribe(() => {
+      this._message('Comment added');
     })
   }
 
   vote({commentId, isUpvote}) {
-    this.post$.subscribe(({id}) => {
-      this.postService.voteComment(id, commentId, isUpvote).subscribe(() => {
-        this._message('Comment voted!');
-      })
+    this.postService.voteComment(this.postId, commentId, isUpvote).subscribe(() => {
+      this._message('Comment voted!');
     })
   }
 
