@@ -16,6 +16,7 @@ describe('ListItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ListItemComponent);
     component = fixture.componentInstance;
+    component.post = {id: '1',createdAt: new Date(),numberOfComments: 0,title: 'Test'};
     fixture.detectChanges();
   });
 

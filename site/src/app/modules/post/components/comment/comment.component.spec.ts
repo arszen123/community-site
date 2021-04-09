@@ -16,6 +16,17 @@ describe('CommentComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CommentComponent);
     component = fixture.componentInstance;
+    component.comment = {
+      id: '1',
+      createdAt: new Date(),
+      numberOfDownvotes: 0,
+      numberOfUpvotes: 0,
+      text: 'Test comment',
+      user: {
+        id: '1',
+        username: 'testuser'
+      }
+    };
     fixture.detectChanges();
   });
 

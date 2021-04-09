@@ -6,6 +6,37 @@ import { map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ListPost, Post } from '../interfaces/post';
 
+export const GQL_QUERY_POSTS = gql`query {
+  posts {
+    id
+    title
+    numberOfComments
+    createdAt
+  }
+}`
+
+export const GQL_QUERY_POST_BY_ID = gql`query ($id: ID!) {
+  post(id: $id) {
+    id
+    title
+    description
+    createdAt
+    user {
+      username
+    }
+    comments {
+      id
+      text
+      createdAt
+      numberOfUpvotes
+      numberOfDownvotes
+      user {
+        username
+      }
+    }
+  }
+}`;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,14 +55,7 @@ export class PostService {
   getPosts() {
     if (!this.postsQueryRef) {
       this.postsQueryRef = this.apollo.watchQuery<ListPost[]>({
-        query: gql`query {
-          posts {
-            id
-            title
-            numberOfComments
-            createdAt
-          }
-        }`
+        query: GQL_QUERY_POSTS,
       });
     }
     return this.postsQueryRef.valueChanges.pipe(map(res => (res.data as any).posts)) 
@@ -86,27 +110,7 @@ export class PostService {
    */
   private _getPostQuery(id: string) {
     return this.apollo.watchQuery<Post>({
-      query: gql`query ($id: ID!) {
-        post(id: $id) {
-          id
-          title
-          description
-          createdAt
-          user {
-            username
-          }
-          comments {
-            id
-            text
-            createdAt
-            numberOfUpvotes
-            numberOfDownvotes
-            user {
-              username
-            }
-          }
-        }
-      }`,
+      query: GQL_QUERY_POST_BY_ID,
       variables: {
         id,
       },

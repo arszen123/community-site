@@ -3,7 +3,7 @@ import { Apollo, gql, QueryRef } from 'apollo-angular';
 import { map } from 'rxjs/operators';
 import { Profile } from '../interfaces/user';
 
-const profileDataQuery = `
+const GQL_QUERY_PROFILE_DATA = `
     id
     username
     posts {
@@ -13,6 +13,9 @@ const profileDataQuery = `
       numberOfComments
     }`;
 
+export const GQL_QUERY_ME = gql`query { me { ${GQL_QUERY_PROFILE_DATA} } }`
+
+export const GQL_QUERY_PROFILE = gql`query ($id: ID!) { user(id: $id) { ${GQL_QUERY_PROFILE_DATA} } }`;
 @Injectable({
   providedIn: 'root'
 })
@@ -25,7 +28,7 @@ export class ProfileService {
   getProfile() {
     if (!this.meQueryRef) {
       this.meQueryRef = this.apollo.watchQuery<Profile>({
-        query: gql`query { me { ${profileDataQuery} } }`
+        query: GQL_QUERY_ME,
       });
     }
     return this.meQueryRef.valueChanges.pipe(map(res => (res.data as any).me));
@@ -33,7 +36,7 @@ export class ProfileService {
 
   getProfileById(id: string) {
     const res = this.apollo.watchQuery<Profile>({
-      query: gql`query ($id: ID!) { user(id: $id) { ${profileDataQuery} } }`,
+      query: GQL_QUERY_PROFILE,
       variables: { id },
     });
     return res.valueChanges.pipe(map(res => (res.data as any).user));
